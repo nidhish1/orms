@@ -26,11 +26,11 @@ func main() {
 
 	//db.AutoMigrate(&UserModel{})
 
-	user2 := &UserModel{Name: "Nid", Address: "Ranchi"}
+	user2 := &UserModel{Name: "kidzz", Address: "Ranchizz"}
 
-	db.Find(user2)
-	user2.Address = "Chennai"
-	db.Save(user2)
+	// db.Find(user2)
+	// user2.Address = "Chennai"
+	// db.Save(user2)
 
 	// db.Model(&user2).Updates(
 	// 	map[string]interface{}{
@@ -41,6 +41,19 @@ func main() {
 	//db.Table("user_models").Where("address = ?", "New York").Update("name", "Walker")
 
 	//https://mindbowser.com/golang-go-with-gorm/  -- CRUD
+
+	tx := db.Begin()
+	err = tx.Create(&user2).Error
+	if err != nil {
+		tx.Rollback()
+	}
+	tx.Commit()
+
+	//mindbowser.com/golang-go-with-gorm/  -- CRUD
+
+	// -- one to one
+	// -- ome to many
+	// -- many to many
 
 	db.Close()
 }
